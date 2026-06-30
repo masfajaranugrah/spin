@@ -191,7 +191,7 @@
 </div>
 
 <!-- Main Content -->
-<main class="flex-1 w-full pt-20 lg:pt-24 px-container-padding-mobile lg:px-20 pb-12 relative flex flex-col h-screen overflow-hidden z-10">
+<main class="flex-1 w-full pt-20 lg:pt-24 px-container-padding-mobile lg:px-10 pb-16 relative flex flex-col h-screen overflow-hidden z-10">
 
     <!-- Centered Header -->
     <div class="flex flex-col items-center text-center mb-16 z-20">
@@ -212,12 +212,11 @@
     </div>
 
     <!-- The Interface Stage -->
-    <div class="flex-1 relative w-full flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full">
-
+    <div class="flex-1 relative w-full flex items-center justify-center max-w-7xl mx-auto w-full">
 
 
         <!-- Central Draw Module -->
-        <div class="relative z-30 flex flex-col items-center justify-center flex-1 order-1 lg:order-2" id="prizeDisplay">
+        <div class="relative z-30 flex flex-col items-center justify-center" id="prizeDisplay">
             <div class="tech-border glass-card-refined p-0.5 w-full max-w-lg shadow-[0_0_80px_-20px_rgba(0,240,255,0.2)]">
                 <div class="bg-surface-container-lowest/40 p-12 text-center relative overflow-hidden">
                     <div class="scanning-line"></div>
@@ -263,31 +262,7 @@
             </div>
         </div>
 
-        <!-- Right Data Panels -->
-        <div class="hidden lg:flex flex-col gap-6 w-56 z-20 items-end order-3">
-            <div class="text-right">
-                <div class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-widest mb-1">Local Network Time</div>
-                <div class="font-label-sm text-2xl text-white font-bold" id="clock">--:--:--</div>
-            </div>
-            <div class="glass-card-refined p-5 w-full">
-                <div class="font-label-sm text-[10px] text-on-surface-variant uppercase mb-4 text-right">System_Logs.txt</div>
-                <div class="font-label-sm text-[10px] text-primary/60 text-right space-y-2 font-mono" id="sysLogs">
-                    <p>&gt; Connection stable</p>
-                    <p>&gt; Syncing registry</p>
-                    <p>&gt; Protocol v4.2.0</p>
-                    <p>&gt; Waiting for command</p>
-                </div>
-            </div>
-            <div class="flex flex-col items-end">
-                <span class="font-label-sm text-[10px] text-on-surface-variant uppercase mb-2 tracking-widest">Network Stability</span>
-                <div class="flex gap-1">
-                    <div class="w-1.5 h-4 bg-primary"></div>
-                    <div class="w-1.5 h-4 bg-primary"></div>
-                    <div class="w-1.5 h-4 bg-primary"></div>
-                    <div class="w-1.5 h-4 bg-primary/20"></div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Scattered Names Area -->
         <div class="absolute inset-0 grid-mask z-10 overflow-hidden pointer-events-none" id="scatterContainer"></div>
