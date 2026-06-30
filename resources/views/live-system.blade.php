@@ -185,8 +185,11 @@
             <span class="font-mono text-[9px] text-on-surface-variant/50 uppercase tracking-widest">by jernih multi komunikasi</span>
         </div>
     </div>
-    <div class="font-label-sm text-[10px] text-primary/40 uppercase tracking-widest pointer-events-auto">
-        Nexus // Unit 04
+    <div class="font-label-sm text-[10px] text-primary/40 uppercase tracking-widest pointer-events-auto flex items-center gap-4">
+        <span>Nexus // Unit 04</span>
+        <button onclick="toggleFullscreen()" class="flex items-center justify-center p-1 rounded border border-primary/20 bg-surface-variant text-primary hover:bg-primary/10 transition-colors" title="Toggle Fullscreen">
+            <span class="material-symbols-outlined text-sm">fullscreen</span>
+        </button>
     </div>
 </div>
 
@@ -216,44 +219,44 @@
 
 
         <!-- Central Draw Module -->
-        <div class="relative z-30 flex flex-col items-center justify-center" id="prizeDisplay">
-            <div class="tech-border glass-card-refined p-0.5 w-full max-w-lg shadow-[0_0_80px_-20px_rgba(0,240,255,0.2)]">
-                <div class="bg-surface-container-lowest/40 p-12 text-center relative overflow-hidden">
+        <div class="relative z-30 flex flex-col items-center justify-center w-full max-w-2xl" id="prizeDisplay">
+            <div class="tech-border glass-card-refined p-0.5 w-full shadow-[0_0_80px_-20px_rgba(0,240,255,0.2)]">
+                <div class="bg-surface-container-lowest/40 p-10 md:p-16 text-center relative overflow-hidden">
                     <div class="scanning-line"></div>
                     <!-- Prize Icon -->
-                    <div class="relative w-32 h-32 mx-auto mb-8">
+                    <div class="relative w-36 h-36 md:w-40 md:h-40 mx-auto mb-10">
                         <div class="absolute inset-0 border border-primary/20 rotate-45 scale-110"></div>
                         <div class="absolute inset-0 border border-secondary/20 -rotate-12"></div>
                         <div class="w-full h-full bg-surface-variant/30 flex items-center justify-center border-0.5 border-primary/30 backdrop-blur-sm">
                             @if($currentPrize?->image_url)
-                                <img src="{{ $currentPrize->image_url }}" alt="{{ $currentPrize->name }}" class="w-20 h-20 object-cover">
+                                <img src="{{ $currentPrize->image_url }}" alt="{{ $currentPrize->name }}" class="w-24 h-24 object-cover">
                             @else
-                                <span class="material-symbols-outlined text-5xl text-primary drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">memory</span>
+                                <span class="material-symbols-outlined text-7xl text-primary drop-shadow-[0_0_15px_rgba(0,240,255,0.6)]">memory</span>
                             @endif
                         </div>
                     </div>
-                    <div class="mb-8">
-                        <h3 class="font-label-sm text-xs text-on-surface-variant uppercase tracking-[0.3em] mb-2">Current Objective</h3>
-                        <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tighter uppercase">
+                    <div class="mb-10">
+                        <h3 class="font-label-sm text-sm text-on-surface-variant uppercase tracking-[0.3em] mb-3">Current Objective</h3>
+                        <h2 class="text-4xl md:text-5xl font-bold text-white tracking-tighter uppercase">
                             {{ $currentPrize?->name ?? 'No Prize Available' }}
                         </h2>
                         @if($currentPrize)
-                        <p class="font-label-sm text-[10px] text-on-surface-variant/50 mt-2 uppercase tracking-widest">
+                        <p class="font-label-sm text-xs text-on-surface-variant/50 mt-3 uppercase tracking-widest">
                             Remaining: {{ $currentPrize->remaining }} / {{ $currentPrize->quota }}
                         </p>
                         @endif
                     </div>
-                    <div class="flex flex-col gap-4 max-w-sm mx-auto">
+                    <div class="flex flex-col gap-5 max-w-md mx-auto">
                         @if($currentPrize)
-                        <button class="tech-btn w-full py-5 text-background font-bold font-label-sm uppercase tracking-[0.2em] text-sm hover:scale-[1.02]" id="startDrawBtn">
+                        <button class="tech-btn w-full py-6 text-background font-bold font-label-sm uppercase tracking-[0.2em] text-base hover:scale-[1.02]" id="startDrawBtn">
                             <span id="drawBtnText">Mulai</span>
                         </button>
                         @else
-                        <div class="w-full py-5 text-center font-label-sm text-on-surface-variant/50 uppercase tracking-[0.2em] text-xs border border-white/10">
+                        <div class="w-full py-6 text-center font-label-sm text-on-surface-variant/50 uppercase tracking-[0.2em] text-sm border border-white/10">
                             No Prize Configured
                         </div>
                         @endif
-                        <div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant/40 px-2 uppercase">
+                        <div class="flex justify-between font-label-sm text-[11px] text-on-surface-variant/40 px-2 uppercase">
                             <span>Sec_Verify: ON</span>
                             <span>Build_ID: {{ $currentPrize?->id ?? '—' }}.1</span>
                         </div>
@@ -566,6 +569,16 @@
         }
     }
     window.fireworks = new Firework(document.getElementById('fireworksCanvas'));
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
 </script>
 </body>
 </html>
