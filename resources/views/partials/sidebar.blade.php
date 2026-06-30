@@ -13,7 +13,7 @@
                 <span class="material-symbols-outlined text-primary-container text-2xl">grid_view</span>
             </div>
             <div>
-                <h1 class="text-xl text-primary tracking-tight leading-none font-extrabold" style="font-family: 'Sora', sans-serif;">NEON<span class="text-secondary">CORE</span></h1>
+                <h1 class="text-xl text-primary tracking-tight leading-none font-extrabold" style="font-family: 'Sora', sans-serif;">SPIN<span class="text-secondary">JMK</span></h1>
                 <span class="text-[10px] text-on-surface-variant">{{ auth()->user()->name }}</span>
             </div>
         </div>

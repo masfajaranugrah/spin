@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Kelola Hadiah - NeonDraw</title>
+    <title>Kelola Hadiah - SPIN JMK</title>
     <script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
 </head>
 <body class="font-body min-h-screen flex antialiased">
     <header class="lg:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface/40 backdrop-blur-xl border-b border-white/10">
-        <div class="font-headline text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary-container">NEON DRAW</div>
+        <div class="font-headline text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary-container">SPIN JMK</div>
         <form method="POST" action="{{ route('logout') }}">@csrf<button class="text-on-surface-variant hover:text-error"><span class="material-symbols-outlined">logout</span></button></form>
     </header>
 

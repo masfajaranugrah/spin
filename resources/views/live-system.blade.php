@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>NeonDraw - Live Draw Professional</title>
+<title>SPIN JMK - Live Draw Professional</title>
 <script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -178,7 +178,7 @@
             <span class="material-symbols-outlined text-primary text-xl">casino</span>
         </div>
         <div>
-            <h1 class="font-label-sm text-sm text-primary font-bold tracking-tighter">NEONDRAW</h1>
+            <h1 class="font-label-sm text-sm text-primary font-bold tracking-tighter">SPIN JMK</h1>
             <span class="text-[9px] text-on-surface-variant/60 font-label-sm block -mt-1">SYSTEM_ACTIVE</span>
         </div>
         <div class="ml-4 pl-4 border-l border-white/10 hidden md:block">

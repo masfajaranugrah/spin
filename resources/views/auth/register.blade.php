@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - NeonDraw</title>
+    <title>Register - SPIN JMK</title>
     <script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <script>
@@ -23,7 +23,7 @@
         <div class="relative">
             <div class="mb-8 text-center">
                 <h1 class="font-sora text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 to-fuchsia-300">Buat Akun</h1>
-                <p class="mt-2 text-sm text-slate-400">Registrasi admin untuk mengakses dashboard NeonDraw.</p>
+                <p class="mt-2 text-sm text-slate-400">Registrasi admin untuk mengakses dashboard SPIN JMK.</p>
             </div>
 
             @if ($errors->any())

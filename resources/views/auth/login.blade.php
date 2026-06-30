@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - NeonDraw</title>
+    <title>Login - SPIN JMK</title>
     <script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <script>
@@ -28,7 +28,7 @@
                 <div class="mx-auto mb-4 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-300 to-fuchsia-400 p-1">
                     <div class="w-full h-full rounded-full bg-[#080f10] flex items-center justify-center font-sora font-black text-cyan-200">ND</div>
                 </div>
-                <h1 class="font-sora text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 to-fuchsia-300">Masuk NeonDraw</h1>
+                <h1 class="font-sora text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 to-fuchsia-300">Masuk SPIN JMK</h1>
                 <p class="mt-2 text-sm text-slate-400">Kelola peserta giveaway dari dashboard.</p>
             </div>
 

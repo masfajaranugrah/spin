@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/prizes', [PrizeController::class, 'store'])->name('prizes.store');
     Route::delete('/prizes/{prize}', [PrizeController::class, 'destroy'])->name('prizes.destroy');
     Route::get('/winners', [WinnerController::class, 'index'])->name('winners');
+    Route::delete('/winners/{winner}', [WinnerController::class, 'destroy'])->name('winners.destroy');
     Route::post('/participants', [DashboardController::class, 'store'])->name('participants.store');
     Route::post('/participants/import', [DashboardController::class, 'import'])->name('participants.import');
     Route::post('/participants/import-stream', [DashboardController::class, 'importStream'])->name('participants.import-stream');
