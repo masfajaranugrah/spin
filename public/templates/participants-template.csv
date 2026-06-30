@@ -1,3 +1,4 @@
-nama,alamat,nomer_telfon
-Alex Chen,Jl. Merdeka No. 10 Jakarta,081234567890
-Sarah Jenkins,Jl. Diponegoro No. 21 Bandung,082233445566
+nama,alamat,nomor_id,no_telepon,biaya_langganan
+Alex Chen,Jl. Merdeka No. 10 Jakarta,CUST-001,081234567890,250000
+Sarah Jenkins,Jl. Diponegoro No. 21 Bandung,CUST-002,082233445566,150000
+Rian Hidayat,Jl. Sudirman No. 99 Surabaya,CUST-003,085712345678,2132130

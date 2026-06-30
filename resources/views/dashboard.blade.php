@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Dashboard - NeonDraw | Kelola Peserta</title>
-    <script src="{{ asset('tailwind-play-cdn.js') }}"></script>
+    <script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <script>
@@ -69,79 +69,83 @@
                     <div class="flex items-center justify-between mb-8"><h3 class="font-label-sm text-primary flex items-center gap-2"><span class="material-symbols-outlined text-lg">add_box</span>MANUAL_ENTRY_NODE</h3><span class="text-[9px] font-label-sm text-on-surface-variant bg-white/5 px-2 py-0.5">READY</span></div>
                     <form class="space-y-6" method="POST" action="{{ route('participants.store') }}">
                         @csrf
-                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>IDENTIFIER_NAME</span><span class="text-primary/40">[STR]</span></label><input class="glass-input w-full px-4 py-3 text-sm focus:ring-0" name="name" placeholder="MASUKKAN_NAMA..." required type="text" value="{{ old('name') }}"></div>
-                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>ADDRESS_NODE</span><span class="text-primary/40">[TXT]</span></label><textarea class="glass-input w-full px-4 py-3 text-sm focus:ring-0 min-h-24" name="address" placeholder="MASUKKAN_ALAMAT..." required>{{ old('address') }}</textarea></div>
-                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>SERIAL_ID_OR_CONTACT</span><span class="text-primary/40">[PHONE]</span></label><input class="glass-input w-full px-4 py-3 text-sm focus:ring-0" name="phone_number" placeholder="CONTOH: 081234567890" required type="text" value="{{ old('phone_number') }}"></div>
-                        <button class="w-full tech-button py-4 mt-2 flex items-center justify-center gap-3" type="submit"><span class="material-symbols-outlined text-xl">sync_alt</span>EXECUTE_ADD</button>
+                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>NAMA</span><span class="text-primary/40">[STR]</span></label><input class="glass-input w-full px-4 py-3 text-sm focus:ring-0" name="name" placeholder="Masukkan nama..." required type="text" value="{{ old('name') }}"></div>
+                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>ALAMAT</span><span class="text-primary/40">[TXT]</span></label><textarea class="glass-input w-full px-4 py-3 text-sm focus:ring-0 min-h-24" name="address" placeholder="Masukkan alamat..." required>{{ old('address') }}</textarea></div>
+                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>NOMOR_ID</span><span class="text-primary/40">[STR]</span></label><input class="glass-input w-full px-4 py-3 text-sm focus:ring-0" name="customer_id" placeholder="Masukkan nomor ID (contoh: ID12345)" type="text" value="{{ old('customer_id') }}"></div>
+                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>NOMOR_TELEPON</span><span class="text-primary/40">[PHONE]</span></label><input class="glass-input w-full px-4 py-3 text-sm focus:ring-0" name="phone_number" placeholder="Masukkan nomor telepon (contoh: 081234567890)" required type="text" value="{{ old('phone_number') }}"></div>
+                        <div class="space-y-2"><label class="font-label-sm text-[10px] text-on-surface-variant flex justify-between"><span>BIAYA_LANGGANAN</span><span class="text-primary/40">[INT]</span></label><input class="glass-input w-full px-4 py-3 text-sm focus:ring-0" name="subscription_fee" placeholder="Masukkan biaya langganan (contoh: 50000)" type="number" min="0" value="{{ old('subscription_fee', 0) }}"></div>
+                        <button class="w-full tech-button py-4 mt-2 flex items-center justify-center gap-3" type="submit"><span class="material-symbols-outlined text-xl">sync_alt</span>TAMBAH PESERTA</button>
                     </form>
                 </section>
-
-                <section class="glass-card tech-border p-6 flex-1">
-                    <div class="flex items-center justify-between mb-5">
-                        <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary">database_upload</span><h3 class="font-label-sm text-on-surface">IMPORT_CSV</h3></div>
-                        <a class="font-label-sm text-[10px] text-primary/60 hover:text-primary flex items-center gap-1 transition-colors" href="{{ asset('templates/participants-template.csv') }}" download><span class="material-symbols-outlined text-sm">download</span>Template</a>
-                    </div>
-
-                    {{-- Drop / click zone --}}
-                    <input accept=".csv,text/csv" class="hidden" id="fileInput" type="file">
-                    <div id="dropZone" class="border-2 border-dashed border-white/10 bg-black/20 rounded p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-secondary/50 hover:bg-secondary/5 transition-all">
-                        <span class="material-symbols-outlined text-4xl text-secondary/50 mb-3">upload_file</span>
-                        <p class="font-label-sm text-[11px] text-on-surface-variant mb-1">Klik atau seret file CSV ke sini</p>
-                        <p class="text-[10px] text-on-surface-variant/40 font-label-sm">Format: nama, alamat, no. telepon</p>
-                    </div>
-
-                    {{-- Selected file + import button --}}
-                    <div class="mt-4 hidden" id="fileSelected">
-                        <div class="flex items-center gap-3 px-4 py-3 bg-secondary/5 border border-secondary/20 rounded mb-4">
-                            <span class="material-symbols-outlined text-secondary text-lg">description</span>
-                            <span class="font-label-sm text-[11px] text-on-surface truncate flex-1" id="fileNameLabel"></span>
-                            <button type="button" onclick="clearFile()" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-base">close</span></button>
-                        </div>
-                        <button class="w-full tech-button py-3 flex items-center justify-center gap-2" id="importBtn" type="button">
-                            <span class="material-symbols-outlined text-lg">upload</span>
-                            <span>Upload &amp; Import</span>
-                        </button>
-                    </div>
-
-                    {{-- Progress --}}
-                    <div class="mt-4 hidden" id="importProgress">
-                        <div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant mb-2">
-                            <span id="progressLabel">Memproses...</span>
-                            <span id="progressPct">0%</span>
-                        </div>
-                        <div class="h-2 bg-white/5 w-full rounded-full overflow-hidden">
-                            <div class="h-full bg-primary transition-all duration-200 shadow-[0_0_8px_rgba(0,240,255,0.5)]" id="progressBar" style="width:0%"></div>
-                        </div>
-                        <p class="font-label-sm text-[10px] text-on-surface-variant/50 mt-1.5" id="progressCount"></p>
-                    </div>
-                </section>
-            </div>
-
-            <div class="col-span-12 xl:col-span-8 flex flex-col glass-card tech-border tech-corner-br overflow-hidden min-h-[620px]">
-                <div class="px-6 py-4 bg-surface-container-highest/30 border-b border-white/5 flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex items-center gap-6"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xl">table_rows</span><h3 class="font-label-sm text-on-surface">DATA_BUFFER</h3></div><div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div><div class="hidden sm:flex gap-4"><span class="font-label-sm text-[10px] text-on-surface-variant">ALL_NODES</span><span class="font-label-sm text-[10px] text-primary">VALIDATED</span></div></div>
-                    <div class="flex items-center gap-3 w-full md:w-auto flex-wrap">
-                        <form class="relative w-full md:w-72" method="GET" action="{{ route('dashboard') }}"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-lg">search</span><input class="glass-input w-full pl-10 pr-4 py-2 text-[11px] font-label-sm focus:border-primary-container" name="search" placeholder="FILTER_RECORDS..." type="text" value="{{ $search }}"></form>
-                        @if ($totalParticipants > 0)
-                            <button type="button" onclick="openDeleteAllModal()" class="flex items-center gap-1.5 px-4 py-2 border border-error/40 text-error font-label-sm text-[10px] hover:bg-error/10 transition-colors whitespace-nowrap">
-                                <span class="material-symbols-outlined text-base">delete_forever</span>DELETE_ALL
-                            </button>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="hidden md:grid grid-cols-12 gap-4 px-8 py-3 bg-black/40 border-b border-white/5 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest"><div class="col-span-1">UID</div><div class="col-span-4">SUBJECT_NAME</div><div class="col-span-3">ADDRESS</div><div class="col-span-2">NETWORK_ID</div><div class="col-span-1">STATUS</div><div class="col-span-1 text-right">OPS</div></div>
-
-                <div class="flex-1 overflow-y-auto custom-scrollbar bg-black/20">
-                    @forelse ($participants as $participant)
-                        <div class="data-row grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-6 md:px-8 py-4 items-center">
-                            <div class="md:col-span-1 font-label-sm text-primary/60">#{{ str_pad((string) ($participants->firstItem() + $loop->index), 3, '0', STR_PAD_LEFT) }}</div>
-                            <div class="md:col-span-4 flex items-center gap-3 min-w-0"><div class="w-7 h-7 tech-border flex items-center justify-center text-[10px] font-bold text-primary bg-primary/5 shrink-0">{{ strtoupper(substr($participant->name, 0, 1)) }}</div><span class="font-semibold text-on-surface text-sm truncate">{{ $participant->name }}</span></div>
-                            <div class="md:col-span-3 font-label-sm text-xs text-on-surface-variant truncate">{{ $participant->address }}</div>
-                            <div class="md:col-span-2 font-label-sm text-on-surface-variant text-xs">{{ $participant->phone_number }}</div>
-                            <div class="md:col-span-1"><span class="status-badge text-primary-container">VERIFIED</span></div>
-                            <div class="md:col-span-1 md:text-right"><button class="text-on-surface-variant hover:text-error transition-colors" type="button" onclick="openDeleteModal('{{ route('participants.destroy', $participant) }}', '{{ addslashes($participant->name) }}')"><span class="material-symbols-outlined text-lg">delete_sweep</span></button></div>
-                        </div>
+ 
+                 <section class="glass-card tech-border p-6 flex-1">
+                     <div class="flex items-center justify-between mb-5">
+                         <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary">database_upload</span><h3 class="font-label-sm text-on-surface">IMPORT_CSV</h3></div>
+                         <a class="font-label-sm text-[10px] text-primary/60 hover:text-primary flex items-center gap-1 transition-colors" href="{{ asset('templates/participants-template.csv') }}" download><span class="material-symbols-outlined text-sm">download</span>Template</a>
+                     </div>
+ 
+                     {{-- Drop / click zone --}}
+                     <input accept=".csv,text/csv" class="hidden" id="fileInput" type="file">
+                     <div id="dropZone" class="border-2 border-dashed border-white/10 bg-black/20 rounded p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-secondary/50 hover:bg-secondary/5 transition-all">
+                         <span class="material-symbols-outlined text-4xl text-secondary/50 mb-3">upload_file</span>
+                         <p class="font-label-sm text-[11px] text-on-surface-variant mb-1">Klik atau seret file CSV ke sini</p>
+                         <p class="text-[10px] text-on-surface-variant/40 font-label-sm">Format: nama, alamat, nomor_id, no_telepon, biaya_langganan</p>
+                     </div>
+ 
+                     {{-- Selected file + import button --}}
+                     <div class="mt-4 hidden" id="fileSelected">
+                         <div class="flex items-center gap-3 px-4 py-3 bg-secondary/5 border border-secondary/20 rounded mb-4">
+                             <span class="material-symbols-outlined text-secondary text-lg">description</span>
+                             <span class="font-label-sm text-[11px] text-on-surface truncate flex-1" id="fileNameLabel"></span>
+                             <button type="button" onclick="clearFile()" class="text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined text-base">close</span></button>
+                         </div>
+                         <button class="w-full tech-button py-3 flex items-center justify-center gap-2" id="importBtn" type="button">
+                             <span class="material-symbols-outlined text-lg">upload</span>
+                             <span>Upload &amp; Import</span>
+                         </button>
+                     </div>
+ 
+                     {{-- Progress --}}
+                     <div class="mt-4 hidden" id="importProgress">
+                         <div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant mb-2">
+                             <span id="progressLabel">Memproses...</span>
+                             <span id="progressPct">0%</span>
+                         </div>
+                         <div class="h-2 bg-white/5 w-full rounded-full overflow-hidden">
+                             <div class="h-full bg-primary transition-all duration-200 shadow-[0_0_8px_rgba(0,240,255,0.5)]" id="progressBar" style="width:0%"></div>
+                         </div>
+                         <p class="font-label-sm text-[10px] text-on-surface-variant/50 mt-1.5" id="progressCount"></p>
+                     </div>
+                 </section>
+             </div>
+ 
+             <div class="col-span-12 xl:col-span-8 flex flex-col glass-card tech-border tech-corner-br overflow-hidden min-h-[620px]">
+                 <div class="px-6 py-4 bg-surface-container-highest/30 border-b border-white/5 flex flex-wrap items-center justify-between gap-4">
+                     <div class="flex items-center gap-6"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-xl">table_rows</span><h3 class="font-label-sm text-on-surface">DATA_BUFFER</h3></div><div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div><div class="hidden sm:flex gap-4"><span class="font-label-sm text-[10px] text-on-surface-variant">ALL_NODES</span><span class="font-label-sm text-[10px] text-primary">VALIDATED</span></div></div>
+                     <div class="flex items-center gap-3 w-full md:w-auto flex-wrap">
+                         <form class="relative w-full md:w-72" method="GET" action="{{ route('dashboard') }}"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-lg">search</span><input class="glass-input w-full pl-10 pr-4 py-2 text-[11px] font-label-sm focus:border-primary-container" name="search" placeholder="Cari data..." type="text" value="{{ $search }}"></form>
+                         @if ($totalParticipants > 0)
+                             <button type="button" onclick="openDeleteAllModal()" class="flex items-center gap-1.5 px-4 py-2 border border-error/40 text-error font-label-sm text-[10px] hover:bg-error/10 transition-colors whitespace-nowrap">
+                                 <span class="material-symbols-outlined text-base">delete_forever</span>HAPUS SEMUA
+                             </button>
+                         @endif
+                     </div>
+                 </div>
+ 
+                 <div class="hidden md:grid grid-cols-12 gap-4 px-8 py-3 bg-black/40 border-b border-white/5 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest"><div class="col-span-1">UID</div><div class="col-span-2">NAMA</div><div class="col-span-2">ALAMAT</div><div class="col-span-1">NOMOR_ID</div><div class="col-span-2">NO_TELP</div><div class="col-span-2 text-center">BIAYA</div><div class="col-span-1 text-center">STATUS</div><div class="col-span-1 text-right">AKSI</div></div>
+ 
+                 <div class="flex-1 overflow-y-auto custom-scrollbar bg-black/20">
+                     @forelse ($participants as $participant)
+                         <div class="data-row grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-6 md:px-8 py-4 items-center">
+                             <div class="md:col-span-1 font-label-sm text-primary/60">#{{ str_pad((string) ($participants->firstItem() + $loop->index), 3, '0', STR_PAD_LEFT) }}</div>
+                             <div class="md:col-span-2 flex items-center gap-3 min-w-0"><div class="w-7 h-7 tech-border flex items-center justify-center text-[10px] font-bold text-primary bg-primary/5 shrink-0">{{ strtoupper(substr($participant->name, 0, 1)) }}</div><span class="font-semibold text-on-surface text-sm truncate">{{ $participant->name }}</span></div>
+                             <div class="md:col-span-2 font-label-sm text-xs text-on-surface-variant truncate">{{ $participant->address }}</div>
+                             <div class="md:col-span-1 font-label-sm text-on-surface-variant text-xs truncate">{{ $participant->customer_id ?? '-' }}</div>
+                             <div class="md:col-span-2 font-label-sm text-on-surface-variant text-xs">{{ $participant->phone_number }}</div>
+                             <div class="md:col-span-2 font-label-sm text-on-surface text-xs text-center font-bold">Rp{{ number_format($participant->subscription_fee) }}</div>
+                             <div class="md:col-span-1 text-center"><span class="status-badge text-primary-container">VERIFIED</span></div>
+                             <div class="md:col-span-1 md:text-right"><button class="text-on-surface-variant hover:text-error transition-colors" type="button" onclick="openDeleteModal('{{ route('participants.destroy', $participant) }}', '{{ addslashes($participant->name) }}')"><span class="material-symbols-outlined text-lg">delete_sweep</span></button></div>
+                         </div>
                     @empty
                         <div class="px-8 py-16 text-center text-on-surface-variant font-label-sm">NO_RECORDS_FOUND. Tambahkan peserta manual atau import CSV.</div>
                     @endforelse

@@ -11,6 +11,8 @@ class Participant extends Model
         'name',
         'address',
         'phone_number',
+        'customer_id',
+        'subscription_fee',
     ];
 
     public function winners(): HasMany

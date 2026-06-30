@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - NeonDraw</title>
-    <script src="{{ asset('tailwind-play-cdn.js') }}"></script>
+    <script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -15,7 +15,7 @@
     <style>
         body { background: #0A0A0F radial-gradient(circle at 15% 50%, rgba(207, 92, 255, .12), transparent 28%); color: #dce4e5; }
         .glass-card { background: rgba(0, 219, 233, .05); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.1); }
-        .glass-input { background: rgba(8, 15, 16, .7); border: 0; border-bottom: 2px solid rgba(0, 240, 255, .3); color: #000000; caret-color: #000000; }
+        .glass-input { background: rgba(8, 15, 16, .7); border: 0; border-bottom: 2px solid rgba(0, 240, 255, .3); color: #ffffff; caret-color: #00f0ff; }
         .glass-input:focus { border-bottom-color: #00f0ff; box-shadow: 0 10px 25px -15px rgba(0,240,255,.7); }
         .glass-button { background: linear-gradient(135deg, rgba(236,178,255,.9), rgba(219,252,255,.9)); border: 2px solid #00f0ff; box-shadow: 0 0 18px rgba(0,240,255,.35); }
     </style>

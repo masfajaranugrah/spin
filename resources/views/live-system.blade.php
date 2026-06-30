@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>NeonDraw - Live Draw Professional</title>
-<script src="{{ asset('tailwind-play-cdn.js') }}"></script>
+<script data-cfasync="false" src="{{ asset('tailwind-play-cdn.js') }}"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script>
@@ -333,11 +333,13 @@
 <!-- Rain Draw Fullscreen Overlay -->
 <div id="drawOverlay">
     <div id="rainField"></div>
-    <div id="countdown" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:900;color:#fff;text-shadow:0 0 60px rgba(0,240,255,.8);transition:opacity .3s ease;"></div>
-    <div id="finalName">
-        <span class="font-label-sm text-[11px] tracking-[0.4em] uppercase" style="color:rgba(0,240,255,.5)">Winner Identified</span>
+    <canvas id="fireworksCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;"></canvas>
+    <div id="countdown" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:900;color:#fff;text-shadow:0 0 60px rgba(0,240,255,.8);transition:opacity .3s ease;z-index:10;"></div>
+    <div id="finalName" style="z-index:10;text-align:center;">
+        <span class="font-label-sm text-sm tracking-[0.4em] uppercase mb-4 animate-bounce block" style="color:#00f0ff; text-shadow:0 0 12px rgba(0,240,255,0.8)">🎉 SELAMAT BAGI PEMENANG! 🎉</span>
         <div id="finalNameText" style="font-family:'JetBrains Mono',monospace;font-size:clamp(2rem,6vw,5rem);font-weight:900;color:#fff;letter-spacing:-.02em;text-shadow:0 0 40px rgba(0,240,255,.6),0 0 80px rgba(0,240,255,.3)"></div>
-        <div id="finalPrizeText" style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:rgba(0,240,255,.7);letter-spacing:.15em;text-transform:uppercase;margin-top:.25rem"></div>
+        <span class="font-label-sm text-[11px] tracking-[0.2em] uppercase mt-6 block" style="color:rgba(255,255,255,0.7)">Anda mendapatkan:</span>
+        <div id="finalPrizeText" style="font-family:'JetBrains Mono',monospace;font-size:2rem;color:#cf5cff;letter-spacing:.15em;text-transform:uppercase;margin-top:.5rem;text-shadow:0 0 20px rgba(207,92,255,0.7)"></div>
     </div>
 </div>
 
@@ -433,7 +435,7 @@
         clearInterval(rainInterval);
         rainInterval = null;
         rainField.innerHTML = '';
-
+ 
         // Countdown 3 → 2 → 1 → tampilkan pemenang
         const cdEl = document.getElementById('countdown');
         cdEl.style.display = 'flex';
@@ -441,7 +443,7 @@
         let n = 3;
         cdEl.style.fontSize = 'clamp(6rem,20vw,14rem)';
         cdEl.textContent = n;
-
+ 
         const tick = setInterval(() => {
             n--;
             if (n > 0) {
@@ -456,23 +458,24 @@
                     finalNameText.textContent = winner.name;
                     finalPrizeText.textContent = winner.prize_name ? '🏆 ' + winner.prize_name : '';
                     finalName.classList.add('visible');
+                    if (window.fireworks) window.fireworks.start();
                 }, 400);
             }
         }, 1800);
     }
-
+ 
     if (startBtn) {
         startBtn.addEventListener('click', () => {
             if (isDrawing || !participants.length) return;
             isDrawing = true;
             startBtn.disabled = true;
             drawStart = Date.now();
-
+ 
             startRain();
-
+ 
             // Pick random participant client-side immediately
             const picked = participants[Math.floor(Math.random() * participants.length)];
-
+ 
             // Call server
             fetch(storeWinnerUrl, {
                 method: 'POST',
@@ -507,10 +510,11 @@
             });
         });
     }
-
+ 
     // Click overlay after winner shown → reset
     overlay.addEventListener('click', () => {
         if (!finalName.classList.contains('visible')) return;
+        if (window.fireworks) window.fireworks.stop();
         overlay.classList.remove('active');
         finalName.classList.remove('visible');
         document.getElementById('countdown').style.display = 'none';
@@ -518,13 +522,94 @@
         if (startBtn) startBtn.disabled = false;
         initNames();
     });
-
+ 
     function showError(msg) {
         const toast = document.getElementById('errorToast');
         toast.querySelector('div').textContent = msg;
         toast.classList.remove('hidden');
         setTimeout(() => toast.classList.add('hidden'), 4000);
     }
+
+    class Firework {
+        constructor(canvas) {
+            this.canvas = canvas;
+            this.ctx = canvas.getContext('2d');
+            this.particles = [];
+            this.active = false;
+            this.animationFrame = null;
+            this.resize = () => {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            };
+        }
+        start() {
+            this.active = true;
+            window.addEventListener('resize', this.resize);
+            this.resize();
+            this.particles = [];
+            this.loop();
+            this.spawnTimer = setInterval(() => {
+                if (this.active) {
+                    this.createExplosion(Math.random() * this.canvas.width, Math.random() * this.canvas.height * 0.7);
+                }
+            }, 600);
+            for(let i=0; i<3; i++) {
+                this.createExplosion(Math.random() * this.canvas.width, Math.random() * this.canvas.height * 0.7);
+            }
+        }
+        stop() {
+            this.active = false;
+            clearInterval(this.spawnTimer);
+            cancelAnimationFrame(this.animationFrame);
+            window.removeEventListener('resize', this.resize);
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.particles = [];
+        }
+        createExplosion(x, y) {
+            const colors = ['#00f0ff', '#cf5cff', '#ecb2ff', '#7df4ff', '#ffb4ab', '#ffffff'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const count = 50 + Math.floor(Math.random() * 50);
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 1 + Math.random() * 8;
+                this.particles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    color: color,
+                    alpha: 1,
+                    decay: 0.015 + Math.random() * 0.015,
+                    gravity: 0.05
+                });
+            }
+        }
+        loop() {
+            if (!this.active) return;
+            this.animationFrame = requestAnimationFrame(() => this.loop());
+            this.ctx.fillStyle = 'rgba(8, 11, 12, 0.2)';
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            for (let i = this.particles.length - 1; i >= 0; i--) {
+                const p = this.particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += p.gravity;
+                p.alpha -= p.decay;
+                if (p.alpha <= 0) {
+                    this.particles.splice(i, 1);
+                    continue;
+                }
+                this.ctx.save();
+                this.ctx.globalAlpha = p.alpha;
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, 2 + Math.random() * 2, 0, Math.PI * 2);
+                this.ctx.fillStyle = p.color;
+                this.ctx.fill();
+                this.ctx.restore();
+            }
+        }
+    }
+    window.fireworks = new Firework(document.getElementById('fireworksCanvas'));
 </script>
 </body>
 </html>

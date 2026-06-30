@@ -17,7 +17,8 @@ class DashboardController extends Controller
             ->when($search, function ($query, string $search) {
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhere('address', 'like', "%{$search}%")
-                    ->orWhere('phone_number', 'like', "%{$search}%");
+                    ->orWhere('phone_number', 'like', "%{$search}%")
+                    ->orWhere('customer_id', 'like', "%{$search}%");
             })
             ->latest()
             ->paginate(8)
@@ -36,6 +37,8 @@ class DashboardController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:500'],
             'phone_number' => ['required', 'string', 'max:50'],
+            'customer_id' => ['nullable', 'string', 'max:255'],
+            'subscription_fee' => ['nullable', 'integer', 'min:0'],
         ]);
 
         Participant::create($data);
@@ -54,12 +57,22 @@ class DashboardController extends Controller
 
         while (! $file->eof()) {
             $row = $file->fgetcsv();
-            if (! is_array($row) || count($row) < 3) continue;
+            if (! is_array($row) || count($row) < 4) continue;
             $name = trim((string) $row[0]);
             $address = trim((string) $row[1]);
-            $phone = trim((string) $row[2]);
+            $customerId = trim((string) $row[2]);
+            $phone = trim((string) $row[3]);
+            $subFee = count($row) >= 5 ? intval(trim((string) $row[4])) : 0;
             if ($name === '' || $address === '' || $phone === '' || in_array(strtolower($name), ['name', 'nama'], true)) continue;
-            $rows[] = ['name' => $name, 'address' => $address, 'phone_number' => $phone, 'created_at' => now(), 'updated_at' => now()];
+            $rows[] = [
+                'name' => $name,
+                'address' => $address,
+                'phone_number' => $phone,
+                'customer_id' => $customerId,
+                'subscription_fee' => $subFee,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
         }
 
         $inserted = 0;
@@ -86,12 +99,22 @@ class DashboardController extends Controller
 
             while (! $file->eof()) {
                 $row = $file->fgetcsv();
-                if (! is_array($row) || count($row) < 3) continue;
+                if (! is_array($row) || count($row) < 4) continue;
                 $name = trim((string) $row[0]);
                 $address = trim((string) $row[1]);
-                $phone = trim((string) $row[2]);
+                $customerId = trim((string) $row[2]);
+                $phone = trim((string) $row[3]);
+                $subFee = count($row) >= 5 ? intval(trim((string) $row[4])) : 0;
                 if ($name === '' || $address === '' || $phone === '' || in_array(strtolower($name), ['name', 'nama'], true)) continue;
-                $rows[] = ['name' => $name, 'address' => $address, 'phone_number' => $phone, 'created_at' => now(), 'updated_at' => now()];
+                $rows[] = [
+                    'name' => $name,
+                    'address' => $address,
+                    'phone_number' => $phone,
+                    'customer_id' => $customerId,
+                    'subscription_fee' => $subFee,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
             }
 
             $total = count($rows);
