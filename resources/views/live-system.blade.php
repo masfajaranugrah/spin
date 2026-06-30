@@ -214,26 +214,7 @@
     <!-- The Interface Stage -->
     <div class="flex-1 relative w-full flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full">
 
-        <!-- Left Data Panels -->
-        <div class="hidden lg:flex flex-col gap-6 w-56 z-20 order-2 lg:order-1">
-            <div class="glass-card-refined p-4 border-l-2 border-primary">
-                <div class="font-label-sm text-[10px] text-on-surface-variant uppercase mb-3">Buffer Stream</div>
-                <div class="space-y-1.5 opacity-60">
-                    <div class="h-1 bg-white/5 w-full"></div>
-                    <div class="h-1 bg-white/5 w-3/4"></div>
-                    <div class="h-1 bg-white/5 w-5/6"></div>
-                    <div class="h-1 bg-white/5 w-1/2"></div>
-                    <div class="h-1 bg-white/5 w-2/3"></div>
-                </div>
-            </div>
-            <div class="glass-card-refined p-4">
-                <div class="font-label-sm text-[10px] text-on-surface-variant uppercase mb-2">Entropy Load</div>
-                <div class="text-2xl font-bold text-primary font-label-sm" id="entropyVal">84.2%</div>
-                <div class="w-full bg-white/5 h-1 mt-3">
-                    <div class="bg-primary h-full" id="entropyBar" style="width:84.2%"></div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Central Draw Module -->
         <div class="relative z-30 flex flex-col items-center justify-center flex-1 order-1 lg:order-2" id="prizeDisplay">

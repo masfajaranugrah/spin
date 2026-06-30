@@ -26,7 +26,7 @@
         <div class="relative">
             <div class="mb-8 text-center">
                 <div class="mx-auto mb-4 w-16 h-16 rounded-full bg-gradient-to-br from-cyan-300 to-fuchsia-400 p-1">
-                    <div class="w-full h-full rounded-full bg-[#080f10] flex items-center justify-center font-sora font-black text-cyan-200">ND</div>
+                    <div class="w-full h-full rounded-full bg-[#080f10] flex items-center justify-center font-sora font-black text-cyan-200">SJ</div>
                 </div>
                 <h1 class="font-sora text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 to-fuchsia-300">Masuk SPIN JMK</h1>
                 <p class="mt-2 text-sm text-slate-400">Kelola peserta giveaway dari dashboard.</p>
