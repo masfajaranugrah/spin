@@ -236,12 +236,12 @@
                         </div>
                     </div>
                     <div class="mb-10">
-                        <h3 class="font-label-sm text-sm text-on-surface-variant uppercase tracking-[0.3em] mb-3">Current Objective</h3>
+                        <h3 class="font-label-sm text-sm text-on-surface-variant uppercase tracking-[0.3em] mb-6">Current Objective</h3>
                         <h2 class="text-4xl md:text-5xl font-bold text-white tracking-tighter uppercase">
                             {{ $currentPrize?->name ?? 'No Prize Available' }}
                         </h2>
                         @if($currentPrize)
-                        <p class="font-label-sm text-xs text-on-surface-variant/50 mt-3 uppercase tracking-widest">
+                        <p class="font-label-sm text-xs text-on-surface-variant/50 mt-6 uppercase tracking-widest">
                             Remaining: {{ $currentPrize->remaining }} / {{ $currentPrize->quota }}
                         </p>
                         @endif
