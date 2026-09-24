@@ -82,15 +82,15 @@
 
                             {{-- Winner --}}
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full {{ $loop->first ? 'bg-secondary-container/30 border-secondary-container text-secondary' : 'bg-white/10 border-white/20 text-on-surface' }} border flex items-center justify-center text-xs font-bold shrink-0">{{ strtoupper(substr($winner->participant->name, 0, 1)) }}</div>
+                                <div class="w-8 h-8 rounded-full {{ $loop->first ? 'bg-secondary-container/30 border-secondary-container text-secondary' : 'bg-white/10 border-white/20 text-on-surface' }} border flex items-center justify-center text-xs font-bold shrink-0">{{ strtoupper(substr($winner->winner_name, 0, 1)) }}</div>
                                 <div>
-                                    <span class="text-on-surface">{{ $winner->participant->name }}</span>
-                                    <p class="md:hidden text-xs text-on-surface-variant">{{ $winner->participant->address }}</p>
+                                    <span class="text-on-surface">{{ $winner->winner_name }}</span>
+                                    <p class="md:hidden text-xs text-on-surface-variant">{{ $winner->winner_address }}</p>
                                 </div>
                             </div>
 
                             {{-- Phone --}}
-                            <div class="font-label text-xs text-on-surface-variant">{{ $winner->participant->phone_number }}</div>
+                            <div class="font-label text-xs text-on-surface-variant">{{ $winner->winner_phone }}</div>
 
                             {{-- Prize --}}
                             <div class="font-label text-xs {{ $loop->first ? 'text-secondary font-bold' : 'text-on-surface-variant' }}">{{ $winner->prize_name }}</div>
@@ -98,7 +98,7 @@
                             {{-- Action: Delete --}}
                             <div class="flex justify-center">
                                 <button
-                                    onclick="openDeleteModal({{ $winner->id }}, '{{ addslashes($winner->participant->name) }}', '{{ addslashes($winner->giveaway_name) }}')"
+                                    onclick="openDeleteModal({{ $winner->id }}, '{{ addslashes($winner->winner_name) }}', '{{ addslashes($winner->giveaway_name) }}')"
                                     class="delete-btn w-8 h-8 rounded-full bg-error/10 border border-error/30 text-error/60 hover:text-error hover:bg-error/20 flex items-center justify-center transition-all"
                                     title="Hapus pemenang">
                                     <span class="material-symbols-outlined text-sm">delete</span>

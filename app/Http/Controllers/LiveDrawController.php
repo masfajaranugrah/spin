@@ -50,9 +50,14 @@ class LiveDrawController extends Controller
             $winner = DB::transaction(function () use ($data): Winner {
                 $prize = Prize::available()->orderBy('priority')->oldest()->lockForUpdate()->firstOrFail();
 
+                $participant = Participant::query()->findOrFail($data['participant_id']);
+
                 $winner = Winner::create([
                     'participant_id' => $data['participant_id'],
                     'prize_id' => $prize->id,
+                    'participant_name' => $participant->name,
+                    'participant_address' => $participant->address,
+                    'participant_phone' => $participant->phone_number,
                     'giveaway_name' => 'Undian Hadiah',
                     'prize_name' => $prize->name,
                     'drawn_at' => now(),
@@ -61,7 +66,7 @@ class LiveDrawController extends Controller
                 $prize->decrement('remaining');
 
                 return $winner;
-            })->load('participant');
+            });
         } catch (ModelNotFoundException) {
             return response()->json(['message' => 'Tidak ada hadiah yang tersedia.'], 422);
         }
@@ -69,9 +74,9 @@ class LiveDrawController extends Controller
         return response()->json([
             'winner' => [
                 'id' => $winner->id,
-                'name' => $winner->participant->name,
-                'address' => $winner->participant->address,
-                'phone_number' => $winner->participant->phone_number,
+                'name' => $winner->participant_name,
+                'address' => $winner->participant_address,
+                'phone_number' => $winner->participant_phone,
                 'giveaway_name' => $winner->giveaway_name,
                 'prize_name' => $winner->prize_name,
                 'drawn_at' => $winner->drawn_at->format('d M Y H:i'),
